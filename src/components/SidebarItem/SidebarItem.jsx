@@ -9,7 +9,6 @@ const SidebarItem = ({ title, icon: IconComponent, link }) => {
         className={({ isActive }) => (isActive ? `${styles.active}` : '')}
       >
         <div className={styles.content}>
-          {/* <img src={icon} alt={title} /> */}
           <IconComponent className={styles.icon} />
         </div>
         <h4>{title}</h4>

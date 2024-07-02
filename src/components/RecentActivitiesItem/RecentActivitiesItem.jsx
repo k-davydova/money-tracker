@@ -1,6 +1,5 @@
 import styles from './RecentActivitiesItem.module.css';
 
-// import movieImg from '../../assets/icons/movie.svg';
 import { formatDate } from '../../utils/formatters';
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa6';
 

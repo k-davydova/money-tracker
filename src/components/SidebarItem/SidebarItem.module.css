@@ -1,15 +1,15 @@
 .content {
   display: flex;
   justify-content: center;
-
-  width: 35px;
-  height: 35px;
+  margin-bottom: 8px;
+  width: 45px;
+  height: 45px;
   background-color: #f7f8fa;
   border-radius: 100%;
 }
 
 .content .icon {
-  height: 20px;
+  height: 30px;
   align-self: center;
   color: #464646;
 }

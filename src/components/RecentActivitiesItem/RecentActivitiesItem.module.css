@@ -9,27 +9,25 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  margin-bottom: 4px;
 }
 
 .title,
 .price {
   color: #464646;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.price {
-  padding-top: 4px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .category {
   color: #797979;
-  font-size: 12px;
+  font-size: 14px;
+  margin-bottom: 2px;
 }
 
 .date {
   color: #797979;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .income {

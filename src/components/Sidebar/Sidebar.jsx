@@ -1,7 +1,7 @@
 import SidebarItem from '../SidebarItem/SidebarItem';
 import styles from './Sidebar.module.css';
 
-import { FaChartSimple } from 'react-icons/fa6';
+import { FaChartSimple, FaClockRotateLeft, FaChartPie } from 'react-icons/fa6';
 
 const Sidebar = () => {
   return (
@@ -13,12 +13,8 @@ const Sidebar = () => {
             title='Dashboard'
             icon={FaChartSimple}
           />
-          <SidebarItem link='/recent' title='Recent' icon={FaChartSimple} />
-          <SidebarItem
-            link='/analytics'
-            title='Analytics'
-            icon={FaChartSimple}
-          />
+          <SidebarItem link='/recent' title='Recent' icon={FaClockRotateLeft} />
+          <SidebarItem link='/analytics' title='Analytics' icon={FaChartPie} />
         </ul>
       </nav>
     </aside>
@@ -26,9 +22,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-{
-  /* <li>Dashboard</li>
-<li>Recent</li>
-<li>Analytics</li> */
-}
