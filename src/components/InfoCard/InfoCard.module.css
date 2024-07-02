@@ -1,0 +1,34 @@
+.info-card {
+  display: flex;
+  gap: 14px;
+  padding: 23px 17px;
+  width: 268px;
+  height: 105px;
+  background-color: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 15px;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 59px;
+  height: 59px;
+  /* background-color: #adc4fe; */
+  border-radius: 100%;
+  /* background-image: url('../../assets/icons/total.svg'); */
+  /* background-repeat: no-repeat; */
+  /* background-position: center; */
+}
+
+.image img {
+  width: 25px;
+  object-fit: cover;
+}
+
+.content p {
+  color: #484848;
+  font-size: 28px;
+  font-weight: 500;
+}

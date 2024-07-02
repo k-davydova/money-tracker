@@ -1,0 +1,29 @@
+.content {
+  display: flex;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+  background-color: #f7f8fa;
+  border-radius: 100%;
+}
+
+.content .icon {
+  height: 20px;
+  align-self: center;
+  color: #464646;
+}
+
+.sidebar-item a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.active .content {
+  background-color: #e8edff;
+}
+
+.active .icon {
+  color: #6c87e9;
+}

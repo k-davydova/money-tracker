@@ -1,0 +1,41 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 12px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.title,
+.price {
+  color: #464646;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.price {
+  padding-top: 4px;
+}
+
+.category {
+  color: #797979;
+  font-size: 12px;
+}
+
+.date {
+  color: #797979;
+  font-size: 10px;
+}
+
+.income {
+  color: #62ef91;
+}
+
+.expense {
+  color: #ee6868;
+}
