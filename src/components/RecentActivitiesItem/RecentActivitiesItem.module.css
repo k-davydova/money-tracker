@@ -1,0 +1,55 @@
+.card {
+  display: flex;
+  gap: 24px;
+  padding: 14px 12px;
+}
+
+.content-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.title,
+.price {
+  color: #464646;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.category {
+  color: #797979;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.date {
+  color: #797979;
+  font-size: 12px;
+}
+
+.income {
+  height: 24px;
+  color: #62ef91;
+}
+
+.expense {
+  height: 24px;
+  color: #ee6868;
+}
+
+.trash {
+  color: #464646;
+  cursor: pointer;
+}
+
+.trash:hover {
+  color: #ee6868;
+  transition: 0.4s;
+}

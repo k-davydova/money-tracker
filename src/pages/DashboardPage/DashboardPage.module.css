@@ -1,0 +1,32 @@
+.dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  /* width: 864px; */
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+}
+
+.info-cards {
+  display: flex;
+  gap: 30px;
+}
+
+.charts {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 100%;
+}
