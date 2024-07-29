@@ -3,35 +3,28 @@ import RecentActivitiesItem from '../RecentActivitiesItem/RecentActivitiesItem';
 import styles from './RecentActivities.module.css';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getFromLocalStorage } from '../../utils/localStorage';
+import { saveToLocalStorage } from '../../utils/localStorage';
 
 const RecentActivities = ({ isWidget }) => {
-  const reduxExpenses = useSelector((state) => state.expenses.expenses);
-  const reduxIncomes = useSelector((state) => state.incomes.incomes);
-
-  const [expenses, setExpenses] = useState([]);
-  const [incomes, setIncomes] = useState([]);
+  const expenses = useSelector((state) => state.expenses.expenses);
+  const incomes = useSelector((state) => state.incomes.incomes);
   const [maxItemsToShow, setMaxItemsToShow] = useState(0);
 
   const activitiesRef = useRef(null);
 
   const allTransactions = [...expenses, ...incomes];
-
   const sortedTransactions = allTransactions.sort(
     (a, b) => new Date(b.datetime) - new Date(a.datetime)
   );
 
   useEffect(() => {
-    const savedTransactions = getFromLocalStorage('transactions');
+    const transactionsToSave = {
+      expenses,
+      incomes,
+    };
 
-    if (savedTransactions.length) {
-      setExpenses(savedTransactions.expenses || []);
-      setIncomes(savedTransactions.incomes || []);
-    } else {
-      setExpenses(reduxExpenses);
-      setIncomes(reduxIncomes);
-    }
-  }, [reduxExpenses, reduxIncomes]);
+    saveToLocalStorage('transactions', transactionsToSave);
+  }, [expenses, incomes]);
 
   useEffect(() => {
     if (!isWidget) {
