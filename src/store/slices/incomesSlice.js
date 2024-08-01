@@ -3,7 +3,7 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from '../../utils/localStorage';
-import { INCOMES_INITIAL_STATE } from '../../constants/initials';
+import { INCOMES_INITIAL_STATE } from '../initialData';
 
 const initialState = {
   incomes:

@@ -3,12 +3,13 @@ import GraphicsWrapper from '../GraphicsWrapper/GraphicsWrapper';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import ChartComponent from '../ChartComponent/ChartComponent';
+import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
 
 const DayStatistic = () => {
-  const [dayDate, setDayDate] = useState(dayjs(new Date()));
+  const [dayData, setDayData] = useState(() => dayjs(new Date()));
 
   const handleChangeDayDate = (date) => {
-    setDayDate(dayjs(date));
+    setDayData(dayjs(date));
   };
 
   return (
@@ -16,14 +17,14 @@ const DayStatistic = () => {
       title='Day statistic'
       datePickerComponent={
         <DatePicker
-          defaultValue={dayDate}
+          defaultValue={dayData}
           slotProps={{ textField: { size: 'small' } }}
-          maxDate={dayjs('2041-12-31')}
-          minDate={dayjs('2018-01-01')}
+          maxDate={dayjs(MAX_DATE_PICKER)}
+          minDate={dayjs(MIN_DATE_PICKER)}
           onChange={handleChangeDayDate}
         />
       }
-      chartComponent={<ChartComponent date={dayDate} chartType='pie' />}
+      chartComponent={<ChartComponent date={dayData} chartType='pie' />}
     />
   );
 };

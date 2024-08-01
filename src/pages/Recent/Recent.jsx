@@ -1,7 +1,7 @@
 import RecentActivities from '../../components/RecentActivities/RecentActivities';
 
-const RecentPage = () => {
+const Recent = () => {
   return <RecentActivities isWidget={false} />;
 };
 
-export default RecentPage;
+export default Recent;

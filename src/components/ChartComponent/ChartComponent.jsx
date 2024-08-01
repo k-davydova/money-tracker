@@ -4,27 +4,30 @@ import {
   calculateMonthlyExpenses,
 } from '../../utils/calculates';
 import { useSelector } from 'react-redux';
-import { expenseCategories } from '../../constants/categories';
 
 import { PieChart, BarChart } from '@mui/x-charts';
-import { CHART_COLORS } from '../../constants/colors';
+import { CHART_COLORS, DARK_GREY_COLOR } from '../../constants/colors';
+import { useMemo } from 'react';
 
 const ChartComponent = ({ date, chartType, dateType = 'day' }) => {
-  const reduxExpenses = useSelector((state) => state.expenses.expenses);
+  const expenses = useSelector((state) => state.expenses.expenses);
 
   const data =
     dateType === 'year'
-      ? calculateMonthlyExpenses(date, reduxExpenses)
-      : calculateExpenses(date, dateType, expenseCategories, reduxExpenses);
+      ? calculateMonthlyExpenses(date, expenses)
+      : calculateExpenses(date, dateType, expenses);
+
+  const dataValues = useMemo(() => data.map((data) => data.value), [data]);
+  const dataLabels = useMemo(() => data.map((data) => data.label), [data]);
 
   const chart =
     chartType === 'bar' ? (
       <BarChart
-        series={[{ data: data.map((data) => data.value) }]}
+        series={[{ data: dataValues }]}
         xAxis={[
           {
             scaleType: 'band',
-            data: data.map((data) => data.label),
+            data: dataLabels,
             colorMap: {
               type: 'ordinal',
               colors: CHART_COLORS,
@@ -46,7 +49,7 @@ const ChartComponent = ({ date, chartType, dateType = 'day' }) => {
           legend: {
             labelStyle: {
               fontSize: 14,
-              fill: '#464646',
+              fill: DARK_GREY_COLOR,
             },
           },
         }}
@@ -56,7 +59,7 @@ const ChartComponent = ({ date, chartType, dateType = 'day' }) => {
   return (
     <div className={styles['chart-container']}>
       {data.length > 0 && chart}
-      {!data.length && (
+      {data.length === 0 && (
         <p className={styles.error}>
           You dont have any transactions on this {dateType}
         </p>

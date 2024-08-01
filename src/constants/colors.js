@@ -10,3 +10,5 @@ export const CHART_COLORS = [
   '#FF5252',
   '#FF9800',
 ];
+
+export const DARK_GREY_COLOR = '#464646';

@@ -1,4 +1,4 @@
-import styles from './DashboardPage.module.css';
+import styles from './Dashboard.module.css';
 
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -16,29 +16,26 @@ import Modal from '../../components/Modal/Modal';
 import DayStatistic from '../../components/DayStatistic/DayStatistic';
 import MonthStatistic from '../../components/MonthStatistic/MonthStatistic';
 
-const DashboardPage = () => {
+const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const incomes = useSelector((state) => state.incomes.incomes);
   const expenses = useSelector((state) => state.expenses.expenses);
 
-  const financeData = useMemo(() => {
+  const totalBalance = useMemo(() => {
     const totalIncome = calculateTotal(incomes);
     const totalExpense = calculateTotal(expenses);
-
-    const currentMonthIncomes = filterByCurrentMonth(incomes);
-    const currentMonthExpenses = filterByCurrentMonth(expenses);
-
-    const totalMonthIncome = calculateTotal(currentMonthIncomes).toFixed(1);
-    const totalMonthExpense = calculateTotal(currentMonthExpenses).toFixed(1);
-
-    const totalBalance = (totalIncome - totalExpense).toFixed(1);
-
-    return {
-      totalMonthIncome,
-      totalMonthExpense,
-      totalBalance,
-    };
+    return (totalIncome - totalExpense).toFixed(1);
   }, [incomes, expenses]);
+
+  const totalMonthIncome = useMemo(() => {
+    const currentMonthIncomes = filterByCurrentMonth(incomes);
+    return calculateTotal(currentMonthIncomes).toFixed(1);
+  }, [incomes]);
+
+  const totalMonthExpense = useMemo(() => {
+    const currentMonthExpenses = filterByCurrentMonth(expenses);
+    return calculateTotal(currentMonthExpenses).toFixed(1);
+  }, [expenses]);
 
   const toggleModal = () => {
     setIsModalOpen((prevState) => !prevState);
@@ -50,19 +47,19 @@ const DashboardPage = () => {
         <div className={styles['info-cards']}>
           <InfoCard
             title='Total Balance'
-            amount={financeData.totalBalance}
+            amount={totalBalance}
             color='#ADC4FE'
             image={totalImg}
           />
           <InfoCard
             title='Monthly Incomes'
-            amount={financeData.totalMonthIncome}
+            amount={totalMonthIncome}
             color='#7BE9A0'
             image={incomeImg}
           />
           <InfoCard
             title='Monthly Expenses'
-            amount={financeData.totalMonthExpense}
+            amount={totalMonthExpense}
             color='#F0D77D'
             image={expensesImg}
           />
@@ -82,4 +79,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default Dashboard;

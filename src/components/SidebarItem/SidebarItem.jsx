@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import styles from './SidebarItem.module.css';
 
-const SidebarItem = ({ title, icon: IconComponent, link }) => {
+const SidebarItem = ({ title, icon, link }) => {
+  const IconComponent = icon;
+
   return (
     <li className={styles['sidebar-item']}>
       <NavLink
