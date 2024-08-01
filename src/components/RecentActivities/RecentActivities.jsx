@@ -1,9 +1,11 @@
-import { useSelector } from 'react-redux';
-import RecentActivitiesItem from '../RecentActivitiesItem/RecentActivitiesItem';
 import styles from './RecentActivities.module.css';
-import { useEffect, useRef, useState } from 'react';
+
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import { saveToLocalStorage } from '../../utils/localStorage';
+import RecentActivitiesItem from '../RecentActivitiesItem/RecentActivitiesItem';
 
 const RecentActivities = ({ isWidget }) => {
   const expenses = useSelector((state) => state.expenses.expenses);
@@ -12,10 +14,15 @@ const RecentActivities = ({ isWidget }) => {
 
   const activitiesRef = useRef(null);
 
-  const allTransactions = [...expenses, ...incomes];
-  const sortedTransactions = allTransactions.sort(
-    (a, b) => new Date(b.datetime) - new Date(a.datetime)
+  const allTransactions = useMemo(
+    () => [...expenses, ...incomes],
+    [expenses, incomes]
   );
+  const sortedTransactions = useMemo(() => {
+    return allTransactions
+      .slice()
+      .sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+  }, [allTransactions]);
 
   useEffect(() => {
     const transactionsToSave = {
@@ -52,7 +59,7 @@ const RecentActivities = ({ isWidget }) => {
 
   return (
     <div
-      className={`${styles.activities} ${isWidget ? styles.widget : null}`}
+      className={`${styles.activities} ${isWidget ? styles.widget : ''}`}
       ref={activitiesRef}
     >
       <div className={styles.title}>

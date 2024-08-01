@@ -19,12 +19,6 @@ const RecentActivitiesItem = ({
 
   const formattedDate = formatDate(date);
 
-  let iconComponent = <FaArrowDown className={styles.income} />;
-
-  if (type === 'expense') {
-    iconComponent = <FaArrowUp className={styles.expense} />;
-  }
-
   const handleDelete = () => {
     if (type === 'expense') {
       dispatch(deleteExpense(id));
@@ -39,7 +33,8 @@ const RecentActivitiesItem = ({
     <div className={styles.card}>
       <div className={styles['content-box']}>
         <div className={styles['content']}>
-          {iconComponent}
+          {type === 'income' && <FaArrowDown className={styles.income} />}
+          {type === 'expense' && <FaArrowUp className={styles.expense} />}
           <div>
             <p className={styles.title}>{title}</p>
             <p className={styles.category}>{category}</p>

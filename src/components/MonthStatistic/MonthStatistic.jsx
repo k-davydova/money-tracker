@@ -3,12 +3,13 @@ import GraphicsWrapper from '../GraphicsWrapper/GraphicsWrapper';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import ChartComponent from '../ChartComponent/ChartComponent';
+import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
 
 const MonthStatistic = () => {
-  const [monthDate, setMonthDate] = useState(dayjs(new Date()));
+  const [monthData, setMonthData] = useState(() => dayjs(new Date()));
 
   const handleChangeMonthDate = (date) => {
-    setMonthDate(dayjs(date));
+    setMonthData(dayjs(date));
   };
 
   return (
@@ -16,17 +17,17 @@ const MonthStatistic = () => {
       title='Month statistic'
       datePickerComponent={
         <DatePicker
-          defaultValue={monthDate}
+          defaultValue={monthData}
           views={['year', 'month']}
           openTo='month'
           slotProps={{ textField: { size: 'small' } }}
-          maxDate={dayjs('2041-12-31')}
-          minDate={dayjs('2018-01-01')}
+          maxDate={dayjs(MAX_DATE_PICKER)}
+          minDate={dayjs(MIN_DATE_PICKER)}
           onChange={handleChangeMonthDate}
         />
       }
       chartComponent={
-        <ChartComponent date={monthDate} dateType='month' chartType='bar' />
+        <ChartComponent date={monthData} dateType='month' chartType='bar' />
       }
     />
   );

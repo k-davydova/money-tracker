@@ -1,10 +1,10 @@
-import styles from './AnalyticsPage.module.css';
+import styles from './Analytics.module.css';
 
 import DayStatistic from '../../components/DayStatistic/DayStatistic';
 import MonthStatistic from '../../components/MonthStatistic/MonthStatistic';
 import YearStatistic from '../../components/YearStatistic/YearStatistic';
 
-const AnalyticsPage = () => {
+const Analytics = () => {
   return (
     <div className={styles.column}>
       <div className={styles.row}>
@@ -16,4 +16,4 @@ const AnalyticsPage = () => {
   );
 };
 
-export default AnalyticsPage;
+export default Analytics;

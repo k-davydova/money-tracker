@@ -4,12 +4,13 @@ import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 
 import {
-  expenseCategories,
-  incomeCategories,
+  EXPENSE_CATEGORIES,
+  INCOME_CATEGORIES,
 } from '../../constants/categories';
 import { useDispatch } from 'react-redux';
 import { addExpense } from '../../store/slices/expensesSlice';
 import { addIncome } from '../../store/slices/incomesSlice';
+import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
 
 const Modal = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Modal = ({ onClose }) => {
   });
 
   const categories =
-    formData.type === 'expense' ? expenseCategories : incomeCategories;
+    formData.type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
 
   const handleChangeDate = (datetime) => {
     setFormData((prevState) => ({
@@ -65,7 +66,7 @@ const Modal = ({ onClose }) => {
       name: title,
       category: category,
       datetime: datetime.toISOString(),
-      amount: +amount,
+      amount: Number(amount),
     };
 
     if (title.trim() && category && !isNaN(amount)) {
@@ -159,8 +160,8 @@ const Modal = ({ onClose }) => {
                 },
               }}
               defaultValue={dayjs(formData.datetime)}
-              maxDate={dayjs('2041-12-31')}
-              minDate={dayjs('2018-01-01')}
+              maxDate={dayjs(MAX_DATE_PICKER)}
+              minDate={dayjs(MIN_DATE_PICKER)}
               onChange={handleChangeDate}
             />
           </div>

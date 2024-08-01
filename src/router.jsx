@@ -1,9 +1,9 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import DashboardPage from './pages/DashboardPage/DashboardPage';
-import RecentPage from './pages/RecentPage/RecentPage';
-import AnalyticsPage from './pages/AnalyticsPage/AnalyticsPage';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Recent from './pages/Recent/Recent';
+import Analytics from './pages/Analytics/Analytics';
 
 export const router = createBrowserRouter([
   {
@@ -16,15 +16,15 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <DashboardPage />,
+        element: <Dashboard />,
       },
       {
         path: 'recent',
-        element: <RecentPage />,
+        element: <Recent />,
       },
       {
         path: 'analytics',
-        element: <AnalyticsPage />,
+        element: <Analytics />,
       },
     ],
   },

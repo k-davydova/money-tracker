@@ -1,4 +1,4 @@
-export const expenseCategories = [
+export const EXPENSE_CATEGORIES = [
   'food',
   'transport',
   'healthcare',
@@ -11,4 +11,4 @@ export const expenseCategories = [
   'others',
 ];
 
-export const incomeCategories = ['salary', 'freelance', 'gift'];
+export const INCOME_CATEGORIES = ['salary', 'freelance', 'gift'];

@@ -1,3 +1,4 @@
+import { EXPENSE_CATEGORIES } from '../constants/categories';
 import { formatDate } from './formatters';
 
 const MONTH_NAMES = [
@@ -15,21 +16,24 @@ const MONTH_NAMES = [
   'dec',
 ];
 
-export const calculateExpenses = (date, type, categories, expenses) => {
-  return categories
-    .map((category) => {
-      const total = expenses
-        .filter(
-          (expense) =>
-            formatDate(expense.datetime, type) === formatDate(date, type)
-        )
-        .filter((expense) => expense.category === category)
-        .reduce((sum, expense) => sum + expense.amount, 0);
+export const calculateExpenses = (date, type, expenses) => {
+  const totalExpenses = EXPENSE_CATEGORIES.reduce((acc, category) => {
+    const expensesByCategory = expenses
+      .filter(
+        (expense) =>
+          formatDate(expense.datetime, type) === formatDate(date, type) &&
+          expense.category === category
+      )
+      .reduce((sum, expense) => sum + expense.amount, 0);
 
-      return total > 0 ? { label: category, value: total } : null;
-    })
-    .filter((item) => item !== null)
-    .sort((a, b) => b.value - a.value);
+    if (expensesByCategory > 0) {
+      acc.push({ label: category, value: expensesByCategory });
+    }
+
+    return acc;
+  }, []);
+
+  return totalExpenses.sort((a, b) => b.value - a.value);
 };
 
 export const calculateMonthlyExpenses = (date, expenses) => {
