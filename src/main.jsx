@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       {/* <App /> */}
-      <RouterProvider router={router} />
+      <RouterProvider router={router} basename='/money-tracker' />
     </Provider>
   </React.StrictMode>
 );
