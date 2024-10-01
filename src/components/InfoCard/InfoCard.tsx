@@ -1,6 +1,13 @@
 import styles from './InfoCard.module.css';
 
-const InfoCard = ({ title, amount, image, color }) => {
+interface Props {
+  title: string;
+  amount: number;
+  image: string;
+  color: string;
+}
+
+const InfoCard = ({ title, amount, image, color }: Props) => {
   return (
     <div className={styles['info-card']}>
       <div className={styles.image} style={{ backgroundColor: `${color}` }}>

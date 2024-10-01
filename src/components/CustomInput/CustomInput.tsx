@@ -7,13 +7,15 @@ interface Props {
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
-const CustomInput = forwardRef(({ value, onClick }: Props, ref) => (
-  <div className={styles['custom-input']} onClick={onClick} ref={ref}>
-    <p>{value}</p>
-    <span className={styles.arrow}>
-      <FaAngleDown />
-    </span>
-  </div>
-));
+const CustomInput = forwardRef<HTMLDivElement, Props>(
+  ({ value, onClick }, ref) => (
+    <div className={styles['custom-input']} onClick={onClick} ref={ref}>
+      <p>{value}</p>
+      <span className={styles.arrow}>
+        <FaAngleDown />
+      </span>
+    </div>
+  )
+);
 
 export default CustomInput;

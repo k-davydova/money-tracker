@@ -1,6 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import GraphicsWrapper from '../GraphicsWrapper/GraphicsWrapper';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import ChartComponent from '../ChartComponent/ChartComponent';
 import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
@@ -8,7 +8,7 @@ import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
 const MonthStatistic = () => {
   const [monthData, setMonthData] = useState(() => dayjs(new Date()));
 
-  const handleChangeMonthDate = (date) => {
+  const handleChangeMonthDate = (date: Dayjs | null) => {
     setMonthData(dayjs(date));
   };
 

@@ -7,12 +7,20 @@ import { useSelector } from 'react-redux';
 import { saveToLocalStorage } from '../../utils/localStorage';
 import RecentActivitiesItem from '../RecentActivitiesItem/RecentActivitiesItem';
 
-const RecentActivities = ({ isWidget }) => {
-  const expenses = useSelector((state) => state.expenses.expenses);
-  const incomes = useSelector((state) => state.incomes.incomes);
+interface Props {
+  isWidget: boolean;
+}
+
+const RecentActivities = ({ isWidget }: Props) => {
+  const expenses = useSelector(
+    (state: { expenses: TransactionsState }) => state.expenses.expenses
+  );
+  const incomes = useSelector(
+    (state: { incomes: TransactionsState }) => state.incomes.incomes
+  );
   const [maxItemsToShow, setMaxItemsToShow] = useState(0);
 
-  const activitiesRef = useRef(null);
+  const activitiesRef = useRef<HTMLDivElement>(null);
 
   const allTransactions = useMemo(
     () => [...expenses, ...incomes],
@@ -21,7 +29,10 @@ const RecentActivities = ({ isWidget }) => {
   const sortedTransactions = useMemo(() => {
     return allTransactions
       .slice()
-      .sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+      .sort(
+        (a, b) =>
+          new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
+      );
   }, [allTransactions]);
 
   useEffect(() => {
@@ -70,18 +81,20 @@ const RecentActivities = ({ isWidget }) => {
         {allTransactions.length > 0 &&
           sortedTransactions
             .slice(0, maxItemsToShow)
-            .map(({ id, type, name, category, datetime, amount }) => (
-              <RecentActivitiesItem
-                key={id}
-                id={id}
-                type={type}
-                title={name}
-                category={category}
-                date={datetime}
-                amount={amount}
-                isWidget={isWidget}
-              />
-            ))}
+            .map(
+              ({ id, type, name, category, datetime, amount }: Transaction) => (
+                <RecentActivitiesItem
+                  key={id}
+                  id={id}
+                  type={type}
+                  name={name}
+                  category={category}
+                  datetime={datetime}
+                  amount={amount}
+                  isWidget={isWidget}
+                />
+              )
+            )}
         {allTransactions.length === 0 && (
           <p className={styles.error}>You dont have any transactions :(</p>
         )}

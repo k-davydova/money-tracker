@@ -9,7 +9,9 @@ const DayStatistic = () => {
   const [dayData, setDayData] = useState<Dayjs>(() => dayjs(new Date()));
 
   const handleChangeDayDate = (date: Dayjs | null) => {
-    if (date) setDayData(dayjs(date));
+    if (date) {
+      setDayData(dayjs(date));
+    }
   };
 
   return (

@@ -6,18 +6,22 @@ import { useDispatch } from 'react-redux';
 import { deleteExpense } from '../../store/slices/expensesSlice';
 import { deleteIncome } from '../../store/slices/incomesSlice';
 
+interface Props extends Transaction {
+  isWidget: boolean;
+}
+
 const RecentActivitiesItem = ({
   id,
-  title,
+  name,
   type,
   category,
-  date,
+  datetime,
   amount,
   isWidget,
-}) => {
+}: Props) => {
   const dispatch = useDispatch();
 
-  const formattedDate = formatDate(date);
+  const formattedDate = formatDate(datetime);
 
   const handleDelete = () => {
     if (type === 'expense') {
@@ -36,7 +40,7 @@ const RecentActivitiesItem = ({
           {type === 'income' && <FaArrowDown className={styles.income} />}
           {type === 'expense' && <FaArrowUp className={styles.expense} />}
           <div>
-            <p className={styles.title}>{title}</p>
+            <p className={styles.title}>{name}</p>
             <p className={styles.category}>{category}</p>
             <p className={styles.date}>{formattedDate}</p>
           </div>

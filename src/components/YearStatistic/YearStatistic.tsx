@@ -1,6 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import GraphicsWrapper from '../GraphicsWrapper/GraphicsWrapper';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import ChartComponent from '../ChartComponent/ChartComponent';
 import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
@@ -8,7 +8,7 @@ import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
 const YearStatistic = () => {
   const [yearData, setYearData] = useState(() => dayjs(new Date()));
 
-  const handleChangeYearDate = (date) => {
+  const handleChangeYearDate = (date: Dayjs | null) => {
     setYearData(dayjs(date));
   };
 

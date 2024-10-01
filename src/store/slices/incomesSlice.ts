@@ -26,7 +26,7 @@ const incomesSlice = createSlice({
     },
     deleteIncome: (state, action) => {
       state.incomes = state.incomes.filter(
-        (income) => income.id !== action.payload
+        (income: Transaction) => income.id !== action.payload
       );
 
       saveToLocalStorage('transactions', { incomes: state.incomes });

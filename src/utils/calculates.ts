@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs';
 import { EXPENSE_CATEGORIES } from '../constants/categories';
 import { formatDate } from './formatters';
 
@@ -16,11 +17,20 @@ const MONTH_NAMES = [
   'dec',
 ];
 
-export const calculateExpenses = (date, type, expenses) => {
+interface CategoryExpense {
+  ladel: string;
+  value: number;
+}
+
+export const calculateExpenses = (
+  date: Dayjs,
+  type: 'day' | 'month',
+  expenses
+): CategoryExpense[] => {
   const totalExpenses = EXPENSE_CATEGORIES.reduce((acc, category) => {
     const expensesByCategory = expenses
       .filter(
-        (expense) =>
+        (expense: Transaction) =>
           formatDate(expense.datetime, type) === formatDate(date, type) &&
           expense.category === category
       )
@@ -36,9 +46,13 @@ export const calculateExpenses = (date, type, expenses) => {
   return totalExpenses.sort((a, b) => b.value - a.value);
 };
 
-export const calculateMonthlyExpenses = (date, expenses) => {
-  const chosenYear = new Date(date).getFullYear();
-  const monthExpenses = Array(12).fill(0);
+export const calculateMonthlyExpenses = (
+  date: Dayjs,
+  expenses: Transaction[]
+): { label: string; value: number; stack: string }[] => {
+  console.log(typeof date);
+  const chosenYear = date.toDate().getFullYear();
+  const monthExpenses: number[] = Array(12).fill(0);
 
   expenses.forEach((expense) => {
     const expenseDate = new Date(expense.datetime);
@@ -57,5 +71,5 @@ export const calculateMonthlyExpenses = (date, expenses) => {
   }));
 };
 
-export const calculateTotal = (items) =>
+export const calculateTotal = (items: Transaction[]) =>
   items.reduce((total, item) => total + item.amount, 0);

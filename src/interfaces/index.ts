@@ -1,13 +1,14 @@
-interface Expense {
+interface Transaction {
   id: string;
-  type: string;
+  type: 'expense' | 'income';
   name: string;
   category: string;
   datetime: string;
-  time: string;
+  time?: string;
   amount: number;
 }
 
-interface ExpensesState {
-  expenses: Expense[];
+interface TransactionsState {
+  expenses: Transaction[];
+  incomes: Transaction[];
 }

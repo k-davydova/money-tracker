@@ -26,7 +26,7 @@ const expensesSlice = createSlice({
     },
     deleteExpense: (state, action) => {
       state.expenses = state.expenses.filter(
-        (expense) => expense.id !== action.payload
+        (expense: Transaction) => expense.id !== action.payload
       );
 
       saveToLocalStorage('transactions', { expenses: state.expenses });

@@ -24,7 +24,7 @@ interface ChartData {
 
 const ChartComponent = ({ date, chartType, dateType = 'day' }: Props) => {
   const expenses = useSelector(
-    (state: { expenses: ExpensesState }) => state.expenses.expenses
+    (state: { expenses: TransactionsState }) => state.expenses.expenses
   );
 
   const data: ChartData[] =
