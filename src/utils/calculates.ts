@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { EXPENSE_CATEGORIES } from '../constants/categories';
 import { formatDate } from './formatters';
 
@@ -18,30 +18,32 @@ const MONTH_NAMES = [
 ];
 
 interface CategoryExpense {
-  ladel: string;
+  label: string;
   value: number;
 }
 
 export const calculateExpenses = (
   date: Dayjs,
   type: 'day' | 'month',
-  expenses
+  expenses: Transaction[]
 ): CategoryExpense[] => {
-  const totalExpenses = EXPENSE_CATEGORIES.reduce((acc, category) => {
-    const expensesByCategory = expenses
-      .filter(
-        (expense: Transaction) =>
-          formatDate(expense.datetime, type) === formatDate(date, type) &&
-          expense.category === category
-      )
-      .reduce((sum, expense) => sum + expense.amount, 0);
+  const totalExpenses = EXPENSE_CATEGORIES.reduce<CategoryExpense[]>(
+    (acc, category) => {
+      const expensesByCategory = expenses
+        .filter(
+          (expense: Transaction) =>
+            formatDate(expense.datetime, type) === formatDate(date, type) &&
+            expense.category === category
+        )
+        .reduce((sum, expense) => sum + expense.amount, 0);
 
-    if (expensesByCategory > 0) {
-      acc.push({ label: category, value: expensesByCategory });
-    }
-
-    return acc;
-  }, []);
+      if (expensesByCategory > 0) {
+        acc.push({ label: category, value: expensesByCategory });
+      }
+      return acc;
+    },
+    []
+  );
 
   return totalExpenses.sort((a, b) => b.value - a.value);
 };
@@ -50,7 +52,6 @@ export const calculateMonthlyExpenses = (
   date: Dayjs,
   expenses: Transaction[]
 ): { label: string; value: number; stack: string }[] => {
-  console.log(typeof date);
   const chosenYear = date.toDate().getFullYear();
   const monthExpenses: number[] = Array(12).fill(0);
 

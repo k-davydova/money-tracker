@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import { DatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 import {
   EXPENSE_CATEGORIES,
@@ -19,7 +19,8 @@ import { addIncome } from '../../store/slices/incomesSlice';
 import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
 
 interface Props {
-  onClose: MouseEventHandler<HTMLDivElement>;
+  // onClose: MouseEventHandler<HTMLDivElement>;
+  onClose: () => void;
 }
 
 interface FormData {
@@ -27,6 +28,7 @@ interface FormData {
   title: string;
   category: string;
   amount: number | null;
+  // datetime: Date;
   datetime: Date;
 }
 
@@ -44,11 +46,13 @@ const Modal = ({ onClose }: Props) => {
   const categories =
     formData.type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
 
-  const handleChangeDate = (datetime: Date) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      datetime: datetime,
-    }));
+  const handleChangeDate = (datetime: Dayjs | null) => {
+    if (datetime) {
+      setFormData((prevState) => ({
+        ...prevState,
+        datetime: datetime.toDate(),
+      }));
+    }
   };
 
   const handleTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,12 +68,17 @@ const Modal = ({ onClose }: Props) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const target = e.target;
-    const type = target.type.value;
+    const target = e.currentTarget as typeof e.currentTarget & {
+      type: HTMLInputElement;
+      title: HTMLInputElement;
+      category: HTMLSelectElement;
+      amount: HTMLInputElement;
+    };
+    const type = target.type.value as 'income' | 'expense';
     const title = target.title.value;
     const category = target.category.value;
+    const amount = Number(target.amount.value);
     const datetime = formData.datetime;
-    const amount = target.amount.value;
 
     setFormData((prevState) => ({
       ...prevState,
@@ -77,7 +86,7 @@ const Modal = ({ onClose }: Props) => {
       title,
       category,
       datetime,
-      amount,
+      amount: Number(amount),
     }));
 
     const newTransaction = {
@@ -168,7 +177,7 @@ const Modal = ({ onClose }: Props) => {
               className={styles.amount}
               type='text'
               name='amount'
-              defaultValue={formData.amount}
+              defaultValue={formData.amount !== null ? formData.amount : ''}
               placeholder='amount'
             />
             <DatePicker

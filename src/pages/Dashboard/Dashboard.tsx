@@ -33,12 +33,12 @@ const Dashboard = () => {
 
   const totalMonthIncome = useMemo(() => {
     const currentMonthIncomes = filterByCurrentMonth(incomes);
-    return calculateTotal(currentMonthIncomes).toFixed(1);
+    return Number(calculateTotal(currentMonthIncomes).toFixed(1));
   }, [incomes]);
 
   const totalMonthExpense = useMemo(() => {
     const currentMonthExpenses = filterByCurrentMonth(expenses);
-    return calculateTotal(currentMonthExpenses).toFixed(1);
+    return Number(calculateTotal(currentMonthExpenses).toFixed(1));
   }, [expenses]);
 
   const toggleModal = () => {
