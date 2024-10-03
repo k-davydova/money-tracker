@@ -8,11 +8,26 @@ import { useSelector } from 'react-redux';
 import { PieChart, BarChart } from '@mui/x-charts';
 import { CHART_COLORS, DARK_GREY_COLOR } from '../../constants/colors';
 import { useMemo } from 'react';
+import { Dayjs } from 'dayjs';
 
-const ChartComponent = ({ date, chartType, dateType = 'day' }) => {
-  const expenses = useSelector((state) => state.expenses.expenses);
+interface Props {
+  date: Dayjs;
+  chartType: 'bar' | 'pie';
+  dateType?: 'day' | 'month' | 'year';
+}
 
-  const data =
+interface ChartData {
+  label: string;
+  dateType?: string;
+  value: number;
+}
+
+const ChartComponent = ({ date, chartType, dateType = 'day' }: Props) => {
+  const expenses = useSelector(
+    (state: { expenses: TransactionsState }) => state.expenses.expenses
+  );
+
+  const data: ChartData[] =
     dateType === 'year'
       ? calculateMonthlyExpenses(date, expenses)
       : calculateExpenses(date, dateType, expenses);

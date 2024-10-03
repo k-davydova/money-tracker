@@ -1,7 +1,13 @@
 import styles from './Modal.module.css';
-import { useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  MouseEventHandler,
+  SetStateAction,
+  useState,
+} from 'react';
 import { DatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 import {
   EXPENSE_CATEGORIES,
@@ -12,10 +18,24 @@ import { addExpense } from '../../store/slices/expensesSlice';
 import { addIncome } from '../../store/slices/incomesSlice';
 import { MAX_DATE_PICKER, MIN_DATE_PICKER } from '../../constants/dateLimits';
 
-const Modal = ({ onClose }) => {
+interface Props {
+  // onClose: MouseEventHandler<HTMLDivElement>;
+  onClose: () => void;
+}
+
+interface FormData {
+  type: 'expense' | 'income';
+  title: string;
+  category: string;
+  amount: number | null;
+  // datetime: Date;
+  datetime: Date;
+}
+
+const Modal = ({ onClose }: Props) => {
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     type: 'expense',
     title: '',
     category: '',
@@ -26,15 +46,17 @@ const Modal = ({ onClose }) => {
   const categories =
     formData.type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
 
-  const handleChangeDate = (datetime) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      datetime: datetime,
-    }));
+  const handleChangeDate = (datetime: Dayjs | null) => {
+    if (datetime) {
+      setFormData((prevState) => ({
+        ...prevState,
+        datetime: datetime.toDate(),
+      }));
+    }
   };
 
-  const handleTypeChange = (e) => {
-    const type = e.target.value;
+  const handleTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const type = e.target.value as 'expense' | 'income';
 
     setFormData((prevState) => ({
       ...prevState,
@@ -43,14 +65,20 @@ const Modal = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const type = e.target.type.value;
-    const title = e.target.title.value;
-    const category = e.target.category.value;
+    const target = e.currentTarget as typeof e.currentTarget & {
+      type: HTMLInputElement;
+      title: HTMLInputElement;
+      category: HTMLSelectElement;
+      amount: HTMLInputElement;
+    };
+    const type = target.type.value as 'income' | 'expense';
+    const title = target.title.value;
+    const category = target.category.value;
+    const amount = Number(target.amount.value);
     const datetime = formData.datetime;
-    const amount = e.target.amount.value;
 
     setFormData((prevState) => ({
       ...prevState,
@@ -58,7 +86,7 @@ const Modal = ({ onClose }) => {
       title,
       category,
       datetime,
-      amount,
+      amount: Number(amount),
     }));
 
     const newTransaction = {
@@ -149,7 +177,7 @@ const Modal = ({ onClose }) => {
               className={styles.amount}
               type='text'
               name='amount'
-              defaultValue={formData.amount}
+              defaultValue={formData.amount !== null ? formData.amount : ''}
               placeholder='amount'
             />
             <DatePicker

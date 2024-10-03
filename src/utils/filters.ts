@@ -1,4 +1,4 @@
-export const filterByCurrentMonth = (items) => {
+export const filterByCurrentMonth = (items: Transaction[]) => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();

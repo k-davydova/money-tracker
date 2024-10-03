@@ -1,7 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import styles from './SidebarItem.module.css';
+import { ComponentType, ElementType } from 'react';
 
-const SidebarItem = ({ title, icon, link }) => {
+interface Props {
+  title: string;
+  icon: ElementType;
+  link: string;
+}
+
+const SidebarItem = ({ title, icon, link }: Props) => {
   const IconComponent = icon;
 
   return (

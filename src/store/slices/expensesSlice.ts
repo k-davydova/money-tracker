@@ -5,9 +5,9 @@ import {
 } from '../../utils/localStorage';
 import { EXPENSES_INITIAL_STATE } from '../initialData';
 
+const localData = getFromLocalStorage('transactions');
 const initialState = {
-  expenses:
-    getFromLocalStorage('transactions')?.expenses || EXPENSES_INITIAL_STATE,
+  expenses: localData?.expenses || EXPENSES_INITIAL_STATE,
 };
 
 const expensesSlice = createSlice({
@@ -22,14 +22,20 @@ const expensesSlice = createSlice({
         id: `expense_${timestamp}`,
       });
 
-      saveToLocalStorage('transactions', { expenses: state.expenses });
+      saveToLocalStorage('transactions', {
+        incomes: localData.incomes,
+        expenses: state.expenses,
+      });
     },
     deleteExpense: (state, action) => {
       state.expenses = state.expenses.filter(
-        (expense) => expense.id !== action.payload
+        (expense: Transaction) => expense.id !== action.payload
       );
 
-      saveToLocalStorage('transactions', { expenses: state.expenses });
+      saveToLocalStorage('transactions', {
+        incomes: localData.incomes,
+        expenses: state.expenses,
+      });
     },
   },
 });

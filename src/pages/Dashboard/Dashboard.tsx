@@ -18,23 +18,27 @@ import MonthStatistic from '../../components/MonthStatistic/MonthStatistic';
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const incomes = useSelector((state) => state.incomes.incomes);
-  const expenses = useSelector((state) => state.expenses.expenses);
+  const incomes = useSelector(
+    (state: { incomes: TransactionsState }) => state.incomes.incomes
+  );
+  const expenses = useSelector(
+    (state: { expenses: TransactionsState }) => state.expenses.expenses
+  );
 
   const totalBalance = useMemo(() => {
     const totalIncome = calculateTotal(incomes);
     const totalExpense = calculateTotal(expenses);
-    return (totalIncome - totalExpense).toFixed(1);
+    return Number((totalIncome - totalExpense).toFixed(1));
   }, [incomes, expenses]);
 
   const totalMonthIncome = useMemo(() => {
     const currentMonthIncomes = filterByCurrentMonth(incomes);
-    return calculateTotal(currentMonthIncomes).toFixed(1);
+    return Number(calculateTotal(currentMonthIncomes).toFixed(1));
   }, [incomes]);
 
   const totalMonthExpense = useMemo(() => {
     const currentMonthExpenses = filterByCurrentMonth(expenses);
-    return calculateTotal(currentMonthExpenses).toFixed(1);
+    return Number(calculateTotal(currentMonthExpenses).toFixed(1));
   }, [expenses]);
 
   const toggleModal = () => {
